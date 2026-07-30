@@ -9,6 +9,8 @@
 // Each break is modeled independently with its own cap, phase-out, and
 // (where applicable) credit-vs-deduction character, so a caller can sum
 // Savings across provisions without double-counting caps.
+//
+// Reference implementation and interactive calculator: https://taxbreakcalc.com/
 package obbbabreaks
 
 // Filing status selects per-provision caps and phase-out thresholds.
@@ -33,14 +35,14 @@ const (
 
 // Result is the per-break outcome.
 type Result struct {
-	Break       Break
-	Eligible    bool    // gross amount before cap and phase-out
-	GrossAmount float64 // the provision's full statutory amount
-	Capped      float64 // after the per-return/per-child cap
-	Deductible  float64 // after MAGI phase-out (the actual claimable amount)
-	IsCredit    bool    // true for credits (dollar-for-dollar); false for deductions
+	Break        Break
+	Eligible     bool    // gross amount before cap and phase-out
+	GrossAmount  float64 // the provision's full statutory amount
+	Capped       float64 // after the per-return/per-child cap
+	Deductible   float64 // after MAGI phase-out (the actual claimable amount)
+	IsCredit     bool    // true for credits (dollar-for-dollar); false for deductions
 	MarginalRate float64 // rate applied to deductions
-	Savings     float64 // federal tax value (credit: dollar-for-dollar; deduction: x marginal rate)
+	Savings      float64 // federal tax value (credit: dollar-for-dollar; deduction: x marginal rate)
 }
 
 // --- Child Tax Credit (§24, PERMANENT under OBBBA) ---
@@ -230,12 +232,12 @@ func SeniorDeduction(spouses65 int, fs FilingStatus, magi, marginalRate float64)
 // $100,000 single / $200,000 MFJ -> fully gone at $150,000/$250,000.
 
 const (
-	carLoanCap      = 10_000.0
-	carLoanStartS   = 100_000.0
-	carLoanStartJ   = 200_000.0
-	carLoanEndS     = 150_000.0
-	carLoanEndJ     = 250_000.0
-	carLoanSlope    = 200.0 // -$200 per $1,000 over
+	carLoanCap    = 10_000.0
+	carLoanStartS = 100_000.0
+	carLoanStartJ = 200_000.0
+	carLoanEndS   = 150_000.0
+	carLoanEndJ   = 250_000.0
+	carLoanSlope  = 200.0 // -$200 per $1,000 over
 )
 
 // CarLoanInterestDeduction returns the §163(h)(4) car-loan interest
