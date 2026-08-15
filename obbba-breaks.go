@@ -10,7 +10,10 @@
 // (where applicable) credit-vs-deduction character, so a caller can sum
 // Savings across provisions without double-counting caps.
 //
-// Reference implementation and interactive calculator: https://taxbreakcalc.com/
+// The child tax credit modeled by ChildTaxCredit — the $2,200 per qualifying
+// child amount, the $200,000/$400,000 MAGI thresholds and the $50-per-$1,000
+// phase-out step — is documented with worked examples and an interactive
+// version at https://taxbreakcalc.com/child-tax-credit-calculator/
 package obbbabreaks
 
 // Filing status selects per-provision caps and phase-out thresholds.
